@@ -1,4 +1,5 @@
 from settings import *
+from player import Player
 
 class Game:
 
@@ -7,7 +8,18 @@ class Game:
         pygame.display.set_caption("Catch The Fruits By Bulayo")
         self.clock = pygame.time.Clock()
 
+        # Images
+        self.player_img = pygame.image.load(join("assets","catcher.png"))
+        self.fruit_img = [pygame.image.load(join("image", f"fruitassets_0{index}")) for index in range(0, 24)]
+
+        # Groups
+        self.all_sprites = pygame.sprite.Group()
+        self.fruit_sprites = pygame.sprite.Group()
+
         self.running = True
+
+        # Object
+        self.player = Player(self.all_sprites, (WIDTH / 2, 477), self.player_img)
 
 
     def run(self):
@@ -18,7 +30,12 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.running = False
 
-    
+            # Update
+            self.all_sprites.update(dt)
+
+            # Draw
+            self.all_sprites.draw(self.WIN)
+
             pygame.display.flip()
 
 
